@@ -1,6 +1,6 @@
-
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -33,10 +33,7 @@ const ServiceProviderDetail = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    // In a real app, this would be an API call
-    // Here we'll simulate it with a timeout
     const timer = setTimeout(() => {
-      // This is mock data that would normally come from an API
       const mockProviders: Provider[] = [
         {
           id: 1,
@@ -223,9 +220,11 @@ const ServiceProviderDetail = () => {
             <p className="text-gray-600 mb-8">
               The service provider you're looking for doesn't exist or has been removed.
             </p>
-            <Button className="bg-primary hover:bg-primary/90" href="/providers">
-              Browse All Providers
-            </Button>
+            <Link to="/providers">
+              <Button className="bg-primary hover:bg-primary/90">
+                Browse All Providers
+              </Button>
+            </Link>
           </div>
         </div>
         <Footer />
