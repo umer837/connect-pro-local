@@ -16,18 +16,21 @@ import { LogIn } from "lucide-react";
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
+  accountType: z.enum(["client", "provider"]).default("client")
 });
 
 const Login = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [accountType, setAccountType] = useState<"client" | "provider">("client");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       email: "",
       password: "",
+      accountType: "client"
     },
   });
 
@@ -43,8 +46,18 @@ const Login = () => {
         description: "Welcome back to ConnectPro!",
       });
       
-      navigate("/");
+      // Redirect based on account type
+      if (values.accountType === "client") {
+        navigate("/client-dashboard");
+      } else {
+        navigate("/provider-dashboard");
+      }
     }, 1500);
+  };
+
+  const updateAccountType = (type: "client" | "provider") => {
+    setAccountType(type);
+    form.setValue("accountType", type);
   };
 
   return (
@@ -58,6 +71,25 @@ const Login = () => {
           </div>
           
           <div className="bg-white p-8 rounded-lg shadow-md border border-gray-200">
+            <div className="flex space-x-2 mb-6">
+              <Button
+                type="button"
+                variant={accountType === "client" ? "default" : "outline"}
+                className="flex-1"
+                onClick={() => updateAccountType("client")}
+              >
+                As Client
+              </Button>
+              <Button
+                type="button"
+                variant={accountType === "provider" ? "default" : "outline"}
+                className="flex-1"
+                onClick={() => updateAccountType("provider")}
+              >
+                As Service Provider
+              </Button>
+            </div>
+            
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField

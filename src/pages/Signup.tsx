@@ -17,6 +17,7 @@ const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
   password: z.string().min(6, { message: "Password must be at least 6 characters" }),
   confirmPassword: z.string(),
+  accountType: z.enum(["client", "provider"]).default("client")
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -35,6 +36,7 @@ const Signup = () => {
       email: "",
       password: "",
       confirmPassword: "",
+      accountType: "client"
     },
   });
 
@@ -50,8 +52,18 @@ const Signup = () => {
         description: "Welcome to ConnectPro! Your account has been created successfully.",
       });
       
-      navigate("/");
+      // Redirect based on account type
+      if (values.accountType === "client") {
+        navigate("/client-dashboard");
+      } else {
+        navigate("/provider-dashboard");
+      }
     }, 1500);
+  };
+
+  const updateAccountType = (type: "client" | "provider") => {
+    setAccountType(type);
+    form.setValue("accountType", type);
   };
 
   return (
@@ -70,7 +82,7 @@ const Signup = () => {
                 type="button"
                 variant={accountType === "client" ? "default" : "outline"}
                 className="flex-1"
-                onClick={() => setAccountType("client")}
+                onClick={() => updateAccountType("client")}
               >
                 As Client
               </Button>
@@ -78,7 +90,7 @@ const Signup = () => {
                 type="button"
                 variant={accountType === "provider" ? "default" : "outline"}
                 className="flex-1"
-                onClick={() => setAccountType("provider")}
+                onClick={() => updateAccountType("provider")}
               >
                 As Service Provider
               </Button>
