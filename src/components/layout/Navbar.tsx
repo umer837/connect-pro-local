@@ -38,11 +38,15 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" className="flex items-center gap-1">
-              <UserCircle size={18} />
-              Login
+            <Button variant="outline" className="flex items-center gap-1" asChild>
+              <Link to="/login">
+                <UserCircle size={18} />
+                Login
+              </Link>
             </Button>
-            <Button className="bg-primary hover:bg-primary/90">Sign Up</Button>
+            <Button className="bg-primary hover:bg-primary/90" asChild>
+              <Link to="/signup">Sign Up</Link>
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -84,8 +88,12 @@ const Navbar = () => {
                 Contact
               </Link>
               <div className="flex flex-col space-y-2 pt-2 border-t">
-                <Button variant="outline" className="w-full justify-center">Login</Button>
-                <Button className="w-full bg-primary hover:bg-primary/90">Sign Up</Button>
+                <Button variant="outline" className="w-full justify-center" asChild>
+                  <Link to="/login">Login</Link>
+                </Button>
+                <Button className="w-full bg-primary hover:bg-primary/90" asChild>
+                  <Link to="/signup">Sign Up</Link>
+                </Button>
               </div>
             </div>
           </div>
