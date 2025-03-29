@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ServiceProviders from "./pages/ServiceProviders";
 import ServiceCategories from "./pages/ServiceCategories";
+import ServiceProviderDetail from "./pages/ServiceProviderDetail";
+import ServiceCategoryDetail from "./pages/ServiceCategoryDetail";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -26,7 +28,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/providers" element={<ServiceProviders />} />
+            <Route path="/providers/:id" element={<ServiceProviderDetail />} />
             <Route path="/services" element={<ServiceCategories />} />
+            <Route path="/services/:categoryId" element={<ServiceCategoryDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/about" element={<About />} />
